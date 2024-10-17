@@ -72,7 +72,13 @@
                             "Ref": "Env"
                         }
                     }
-                }
+                },
+                "Layers": [
+                    {"Fn::GetAtt": [
+                        "LambdaLibsLayer",
+                        "Arn"
+                    ]}
+                ]
             }
         },
         "ScheduledRule": {
