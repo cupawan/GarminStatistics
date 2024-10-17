@@ -1,0 +1,76 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "Template for Lambda Sample.",
+    "Parameters": {
+        "SourceName": {
+            "Description": "API Name",
+            "Type": "String"
+        },
+        "ApplicationName": {
+            "Description": "Application Name",
+            "Type": "String"
+        },
+        "Env": {
+            "Description": "Environment",
+            "Type": "String"
+        }
+    },
+    "Resources": {
+        "LambdaRole": {
+            "Type": "AWS::IAM::Role",
+            "Properties": {
+                "RoleName": "${ApplicationName}-${SourceName}--simplestatistics-iam-${Env}",
+                "AssumeRolePolicyDocument": {
+                    "Statement": [
+                        {
+                            "Action": [
+                                "sts:AssumeRole"
+                            ],
+                            "Effect": "Allow",
+                            "Principal": {
+                                "Service": [
+                                    "lambda.amazonaws.com"
+                                ]
+                            }
+                        }
+                    ],
+                    "Version": "2012-10-17"
+                },
+                "ManagedPolicyArns": [
+                    "arn:aws:iam::aws:policy/AWSLambdaExecute",
+                    "arn:aws:iam::aws:policy/AmazonS3FullAccess",
+                    "arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess",
+                    "arn:aws:iam::aws:policy/AmazonKinesisFullAccess"
+                ],
+                "Path": "/"
+            }
+        },
+        "LambdaFunction": {
+            "Type": "AWS::Serverless::Function",
+            "Properties": {
+                "FunctionName": {
+                    "Fn::Sub": "${ApplicationName}-${SourceName}--simplestatistics-${Env}"
+                },
+                "Description": "Lambda Function to pull statistics from Garmin API",
+                "Runtime": "python3.12",
+                "CodeUri": "./lambda/garmin_statistics_function/",
+                "Handler": "lambda_function.lambda_handler",
+                "MemorySize": 128,
+                "Timeout": 300,
+                "Role": {
+                    "Fn::GetAtt": [
+                        "LambdaRole",
+                        "Arn"
+                    ]
+                },
+                "Environment": {
+                    "Variables": {
+                        "config": {
+                            "Ref": "EnvName"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,29 @@
+image: python:3.12
+
+stages:
+  - build
+  - deploy
+
+before_script:
+  - apt-get update
+  - apt-get install -y awscli zip
+
+build-sam:
+  stage: build
+  script:
+    - sam build --template-file garmin-simple-stack.json
+
+deploy-sam:
+  stage: deploy
+  script:
+    - sam deploy \
+        --template-file garmin-simple-stack.json \
+        --stack-name garmin-simple-stack \
+        --capabilities CAPABILITY_IAM \
+        --region ap-south-1 \
+        --parameter-overrides \
+          ParameterKey=SourceName,ParameterValue=$Source_Name \
+          ParameterKey=ApplicationName,ParameterValue=$Application_Name \
+          ParameterKey=Env,ParameterValue=$Env
+  only:
+    - dev
