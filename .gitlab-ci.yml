@@ -17,7 +17,7 @@ build-sam:
 deploy-sam:
   stage: deploy
   script:
-    - sam deploy \
+    - sam deploy --guided \
         --template-file garmin-simple-stack.json \
         --stack-name garmin-simple-stack \
         --capabilities CAPABILITY_IAM \
