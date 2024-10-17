@@ -20,7 +20,9 @@
         "LambdaRole": {
             "Type": "AWS::IAM::Role",
             "Properties": {
-                "RoleName": "${ApplicationName}-${SourceName}-lambda-iam-${Env}",
+                "RoleName": {
+                    "Fn::Sub":"${ApplicationName}-${SourceName}-lambda-iam-${Env}"
+                },
                 "AssumeRolePolicyDocument": {
                     "Statement": [
                         {
