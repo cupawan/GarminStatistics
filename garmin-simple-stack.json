@@ -106,13 +106,13 @@
                 "python3.12",
                 "python3.11"
             ],
-            "ContentUri:": "layers/libs",
+            "ContentUri": "layers/libs",
             "Description": {"Fn::Sub": "Libraries for ${LambdaFunction}"},
             "LayerName": {
                 "Fn::Sub": "${ApplicationName}${SourceName}LambaLib${Env}"
             },
             "LicenseInfo": "MIT"
         }
-}
     }
+}
 }
