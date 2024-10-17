@@ -56,7 +56,7 @@
                 "python3.11"
             ],
             "ContentUri": "layers/libs",
-            "Description": {"Fn::Sub": "Libraries for ${LambdaFunction}"},
+            "Description": "Libraries for Garmin Statistics Lambda",
             "LayerName": {
                 "Fn::Sub": "${ApplicationName}${SourceName}LambaLib${Env}"
             },
