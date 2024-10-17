@@ -91,7 +91,7 @@
                 "Layers": [
                     {"Fn::GetAtt": [
                         "LambdaLibsLayer",
-                        "Arn"
+                        "LayerVersionArn"
                     ]}
                 ]
             },
