@@ -74,6 +74,30 @@
                     }
                 }
             }
+        },
+        "ScheduledRule": {
+            "Type": "AWS::Events::Rule",
+            "Properties": {
+                "Name" : {
+                    "Fn::Sub": "${ApplicationName}${SourceName}EventRule${Env}"
+                },
+                "Description": "ScheduledRule",
+                "ScheduleExpression": "cron(0/30 1-3 * * ? *)",
+                "State": "DISABLED",
+                "Targets": [{
+                    "Arn": { "Fn::GetAtt": ["LambdaFunction", "Arn"] },
+                    "Id": "LambdaFunction"
+                    }]
+                }
+            },
+        "PermissionForEventsToInvokeLambda": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+                "FunctionName": { "Ref": "LambdaFunction" },
+                "Action": "lambda:InvokeFunction",
+                "Principal": "events.amazonaws.com",
+                "SourceArn": { "Fn::GetAtt": ["ScheduledRule", "Arn"] }
+            }
         }
     }
 }
