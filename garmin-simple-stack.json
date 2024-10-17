@@ -79,7 +79,11 @@
                         "Arn"
                     ]}
                 ]
-            }
+            },
+            "DependsOn": [
+                "LambdaRole",
+                "LambdaLibsLayer"
+            ]
         },
         "ScheduledRule": {
             "Type": "AWS::Events::Rule",
