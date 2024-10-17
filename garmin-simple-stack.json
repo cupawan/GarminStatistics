@@ -20,7 +20,7 @@
         "LambdaRole": {
             "Type": "AWS::IAM::Role",
             "Properties": {
-                "RoleName": "${ApplicationName}-${SourceName}--simplestatistics-iam-${Env}",
+                "RoleName": "${ApplicationName}-${SourceName}-simplestatistics-iam-${Env}",
                 "AssumeRolePolicyDocument": {
                     "Statement": [
                         {
