@@ -98,7 +98,8 @@
                     "Arn": { "Fn::GetAtt": ["LambdaFunction", "Arn"] },
                     "Id": "LambdaFunction"
                     }]
-                }
+                },
+            "DependsOn": "LambdaFunction"
             },
         "PermissionForEventsToInvokeLambda": {
             "Type": "AWS::Lambda::Permission",
@@ -107,7 +108,8 @@
                 "Action": "lambda:InvokeFunction",
                 "Principal": "events.amazonaws.com",
                 "SourceArn": { "Fn::GetAtt": ["ScheduledRule", "Arn"] }
-            }
+            },
+            "DependsOn" : "LambdaFunction"
         },
         "LambdaLibsLayer": {
         "Type": "AWS::Serverless::LayerVersion",
