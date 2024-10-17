@@ -21,7 +21,7 @@
             "Type": "AWS::IAM::Role",
             "Properties": {
                 "RoleName": {
-                    "Fn::Sub":"${ApplicationName}-${SourceName}-lambda-iam-${Env}"
+                    "Fn::Sub":"${ApplicationName}${SourceName}LambdaIam${Env}"
                 },
                 "AssumeRolePolicyDocument": {
                     "Statement": [
@@ -52,7 +52,7 @@
             "Type": "AWS::Serverless::Function",
             "Properties": {
                 "FunctionName": {
-                    "Fn::Sub": "${ApplicationName}-${SourceName}--simplestatistics-${Env}"
+                    "Fn::Sub": "${ApplicationName}${SourceName}SimpleStatistics${Env}"
                 },
                 "Description": "Lambda Function to pull statistics from Garmin API",
                 "Runtime": "python3.12",
