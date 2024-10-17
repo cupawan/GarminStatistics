@@ -17,8 +17,8 @@ build-sam:
 deploy-sam:
   stage: deploy
   script:
-    - sam deploy --use-json --guided \
-        --template-file garmin-simple-stack.json \
+    - sam deploy --use-json \
+        --template-file .aws-sam/build/template.yaml \
         --stack-name garmin-simple-stack \
         --capabilities CAPABILITY_IAM \
         --s3-bucket cupawandeploybucket \
