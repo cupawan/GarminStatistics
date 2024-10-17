@@ -100,7 +100,7 @@
             }
         },
         "LambdaLibsLayer": {
-        "Type": "AWS::Lambda::LayerVersion",
+        "Type": "AWS::Serverless::LayerVersion",
         "Properties": {
             "CompatibleRuntimes": [
                 "python3.12",
