@@ -20,7 +20,7 @@ deploy-sam:
     - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
     - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
     - aws configure set default.region $AWS_DEFAULT_REGION
-    - sam deploy --use-json --template-file garmin-simple-stack.json --stack-name garmin-simple-stack --capabilities CAPABILITY_IAM CAPABILITY_NAMED_IAM --s3-bucket cupawandeploybucket --s3-prefix common/cloudformation --region ap-south-1 --parameter-overrides ParameterKey=SourceName,ParameterValue=$Source_Name ParameterKey=ApplicationName,ParameterValue=$Application_Name ParameterKey=Env,ParameterValue=$Env
+    - sam deploy --use-json --no-fail-on-empty-changeset --template-file garmin-simple-stack.json --stack-name garmin-simple-stack --capabilities CAPABILITY_IAM CAPABILITY_NAMED_IAM --s3-bucket cupawandeploybucket --s3-prefix common/cloudformation --region ap-south-1 --parameter-overrides ParameterKey=SourceName,ParameterValue=$Source_Name ParameterKey=ApplicationName,ParameterValue=$Application_Name ParameterKey=Env,ParameterValue=$Env
   only:
     - dev
 
