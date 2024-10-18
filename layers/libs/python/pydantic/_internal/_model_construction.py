@@ -448,15 +448,11 @@ def inspect_namespace(  # noqa C901
                 # (as the model class wasn't created yet, we unfortunately can't use `cls.__module__`):
                 frame = sys._getframe(2)
                 if frame is not None:
-                    try:
-                        ann_type = eval_type_backport(
-                            _make_forward_ref(ann_type, is_argument=False, is_class=True),
-                            globalns=frame.f_globals,
-                            localns=frame.f_locals,
-                        )
-                    except (NameError, TypeError):
-                        pass
-
+                    ann_type = eval_type_backport(
+                        _make_forward_ref(ann_type, is_argument=False, is_class=True),
+                        globalns=frame.f_globals,
+                        localns=frame.f_locals,
+                    )
             if is_annotated(ann_type):
                 _, *metadata = typing_extensions.get_args(ann_type)
                 private_attr = next((v for v in metadata if isinstance(v, ModelPrivateAttr)), None)

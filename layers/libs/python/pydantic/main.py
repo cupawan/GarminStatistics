@@ -16,7 +16,6 @@ from typing import (
     Dict,
     Generator,
     Literal,
-    Mapping,
     Set,
     Tuple,
     TypeVar,
@@ -71,9 +70,7 @@ __all__ = 'BaseModel', 'create_model'
 # Keep these type aliases available at runtime:
 TupleGenerator: TypeAlias = Generator[Tuple[str, Any], None, None]
 # Keep this type alias in sync with the stub definition in `pydantic-core`:
-IncEx: TypeAlias = Union[
-    Set[int], Set[str], Mapping[int, Union['IncEx', Literal[True]]], Mapping[str, Union['IncEx', Literal[True]]]
-]
+IncEx: TypeAlias = Union[Set[int], Set[str], Dict[int, Union['IncEx', bool]], Dict[str, Union['IncEx', bool]]]
 
 _object_setattr = _model_construction.object_setattr
 
