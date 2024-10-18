@@ -129,7 +129,9 @@
         "LambdaRolePolicies": {
                         "Type": "AWS::IAM::Policy",
                         "Properties": {
-                            "PolicyName": "root",
+                            "PolicyName": {
+                                "Fn::Sub":"${ApplicationName}${SourceName}LambdaPolicy${Env}"
+                            },
                             "PolicyDocument": {
                             "Version" : "2012-10-17",
                             "Statement": [ {
