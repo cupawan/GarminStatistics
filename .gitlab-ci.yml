@@ -17,10 +17,43 @@ build-sam:
 deploy-sam:
   stage: deploy
   script:
+    - source $GARMINSECRETS
     - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
     - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
     - aws configure set default.region $AWS_DEFAULT_REGION
-    - sam deploy --use-json --template-file garmin-simple-stack.json --stack-name garmin-simple-stack --capabilities CAPABILITY_IAM CAPABILITY_NAMED_IAM --s3-bucket cupawandeploybucket --s3-prefix common/cloudformation --region ap-south-1 --parameter-overrides ParameterKey=SourceName,ParameterValue=$Source_Name ParameterKey=ApplicationName,ParameterValue=$Application_Name ParameterKey=Env,ParameterValue=$Env
+    - sam deploy --use-json \
+    - --template-file garmin-simple-stack.json \
+    - --stack-name garmin-simple-stack \
+    - --capabilities CAPABILITY_IAM CAPABILITY_NAMED_IAM \
+    - --s3-bucket cupawandeploybucket \
+    - --s3-prefix common/cloudformation \
+    - --region ap-south-1 \
+    - --parameter-overrides \
+      ParameterKey=SourceName,ParameterValue=$Source_Name \
+      ParameterKey=ApplicationName,ParameterValue=$Application_Name \
+      ParameterKey=Env,ParameterValue=$Env \
+      ParameterKey=TelegramBotToken,ParameterValue=$TELEGRAM_BOT_TOKEN \
+      ParameterKey=TelegramChatIds,ParameterValue=$TELEGRAM_CHAT_IDS \
+      ParameterKey=MyGarminPassword,ParameterValue=$MY_GARMIN_PASSWORD \
+      ParameterKey=MyEmailAdderess,ParameterValue=$MY_EMAIL_ADDRESS \
+      ParameterKey=AwsAccessKey,ParameterValue=$AWS_ACCESS_KEY \
+      ParameterKey=AwsSecretAccessKey,ParameterValue=$AWS_SECRET_ACCESS_KEY \
+      ParameterKey=AwsS3BucketName,ParameterValue=$AWS_S3_BUCKET_NAME \
+      ParameterKey=AwsS3LambdaFolderKey,ParameterValue=$AWS_S3LAMBDA_FOLDER_KEY \
+      ParameterKey=AwsS3LambdaGarminFilename,ParameterValue=$AWS_S3LAMBDA_GARMIN_FILENAME \
+      ParameterKey=MongoDbConnectionString,ParameterValue=$MONGODB_CONNECTION_STRING \
+      ParameterKey=MongoDbDatabase,ParameterValue=$MONGODB_DATABASE \
+      ParameterKey=BulletinEmailAdderess,ParameterValue=$BULLETIN_EMAIL_ADDRESS \
+      ParameterKey=BulletinEmailAddressAppPassword,ParameterValue=$BULLET_EMAIL_ADDRESS_APP_PASSWORD \
+      ParameterKey=RunningMapPath,ParameterValue=$RUNNING_MAP_PATH \
+      ParameterKey=GoogleApiKey,ParameterValue=$GOOGLE_API_KEY \
+      ParameterKey=GoogleMapsApiPath,ParameterValue=$GOOGLE_MAPS_API_PATH \
+      ParameterKey=RecEmail,ParameterValue=$REC_EMAIL
+
   only:
     - dev
+
+
+
+
 
