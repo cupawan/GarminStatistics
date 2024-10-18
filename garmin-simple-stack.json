@@ -14,76 +14,7 @@
         "Env": {
             "Description": "Environment",
             "Type": "String"
-        },
-        "TelegramBotToken": {
-            "Description": "TELEGRAM_BOT_TOKEN",
-            "Type": "String"
-        },
-        "TelegramChatIds": {
-            "Description": "TELEGRAM_CHAT_IDS",
-            "Type": "String"
-        },
-        "MyGarminPassword": {
-            "Description": "MY_GARMIN_PASSWORD",
-            "Type": "String"
-        },
-        "MyEmailAdderess": {
-            "Description": "MY_EMAIL_ADDRESS",
-            "Type": "String"
-        },
-        "AwsAccessKey": {
-            "Description": "AWS_ACCESS_KEY",
-            "Type": "String"
-        },
-        "AwsSecretAccessKey": {
-            "Description": "AWS_SECRET_ACCESS_KEY",
-            "Type": "String"
-        },
-        "AwsS3BucketName": {
-            "Description": "AWS_S3_BUCKET_NAME",
-            "Type": "String"
-        },
-        "AwsS3LambdaFolderKey": {
-            "Description": "AWS_S3LAMBDA_FOLDER_KEY",
-            "Type": "String"
-        },
-        "AwsS3LambdaGarminFilename": {
-            "Description": "AWS_S3LAMBDA_GARMIN_FILENAME",
-            "Type": "String"
-        },
-        "MongoDbConnectionString": {
-            "Description": "MONGODB_CONNECTION_STRING",
-            "Type": "String"
-        },
-        "MongoDbDatabase": {
-            "Description": "MONGODB_DATABASE",
-            "Type": "String"
-        },
-        "BulletinEmailAdderess": {
-            "Description": "BULLETIN_EMAIL_ADDRESS",
-            "Type": "String"
-        },
-        "BulletinEmailAddressAppPassword": {
-            "Description": "BULLET_EMAIL_ADDRESS_APP_PASSWORD",
-            "Type": "String"
-        },
-        "RecEmail": {
-            "Description": "REC_EMAIL",
-            "Type": "String"
-        },
-        "GoogleApiKey": {
-            "Description": "GOOGLE_API_KEY",
-            "Type": "String"
-        },
-        "RunningMapPath": {
-            "Description": "RUNNING_MAP_PATH",
-            "Type": "String"
-        },
-        "GoogleMapsApiPath": {
-            "Description": "GOOGLE_MAPS_API_PATH",
-            "Type": "String"
         }
-        
     },
     "Resources": {
         "LambdaRole": {
@@ -153,23 +84,7 @@
                 "Environment": {
                     "Variables": {
                         "config": {
-                            "TELEGRAM_BOT_TOKEN": {"Fn::Sub": "${TelegramBotToken}"},
-                            "TELEGRAM_CHAT_IDS": {"Fn::Sub": "${TelegramChatIds}"},
-                            "MY_GARMIN_PASSWORD": {"Fn::Sub": "${MyGarminPassword}"},
-                            "MY_EMAIL_ADDRESS": {"Fn::Sub": "${MyEmailAdderess}"},
-                            "AWS_ACCESS_KEY": {"Fn::Sub": "${AwsAccessKey}"},
-                            "AWS_SECRET_ACCESS_KEY": {"Fn::Sub": "${AwsSecretAccessKey}"},
-                            "AWS_S3_BUCKET_NAME": {"Fn::Sub": "${AwsS3BucketName}"},
-                            "AWS_S3LAMBDA_FOLDER_KEY": {"Fn::Sub": "${AwsS3LambdaFolderKey}"},
-                            "AWS_S3LAMBDA_GARMIN_FILENAME": {"Fn::Sub": "${AwsS3LambdaGarminFilename}"},
-                            "MONGODB_CONNECTION_STRING": {"Fn::Sub": "${MongoDbConnectionString}"},
-                            "MONGODB_DATABASE": {"Fn::Sub": "${MongoDbDatabase}"},
-                            "BULLETIN_EMAIL_ADDRESS": {"Fn::Sub": "${BulletinEmailAdderess}"},
-                            "BULLET_EMAIL_ADDRESS_APP_PASSWORD": {"Fn::Sub": "${BulletinEmailAddressAppPassword}"},
-                            "REC_EMAIL": {"Fn::Sub": "${RecEmail}"},
-                            "RUNNING_MAP_PATH": {"Fn::Sub": "${RunningMapPath}"},
-                            "GOOGLE_API_KEY": {"Fn::Sub": "${GoogleApiKey}"},
-                            "GOOGLE_MAPS_API_PATH": {"Fn::Sub": "${GoogleMapsApiPath}"}
+                            "Ref": "Env"
                         }
                     }
                 },
