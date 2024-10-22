@@ -6,6 +6,7 @@ from mongo_utils import MongoUtils
 from telegram_message import TelegramMessage
 
 logger = logging.getLogger(__name__)
+logger.setLevel("INFO")
 
 
 telegram_instance = TelegramMessage()
