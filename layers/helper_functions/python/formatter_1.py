@@ -134,7 +134,7 @@ Shoes: {metadata['gear']}
     
     def sleep_text(self, sleep_data):
         return f"""
-Sleep {sleep_data['formatted_date']}
+Sleep ({sleep_data['formatted_date']})
 =========================
 You slept for {sleep_data['total_time']}, from {sleep_data['from_']} to {sleep_data['to_']}.
 Score: {sleep_data['sleep_score']} ({sleep_data['quality']})

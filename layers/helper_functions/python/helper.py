@@ -87,7 +87,7 @@ class Helper:
         s_text = Formatter().sleep_text(sleep_data=sleep_data)
         if sleep_data and running_data:
             logger.info("All data fetched successfully. Formatting text body.")
-            msg_body = f"{r_text}\n\n{s_text}"
+            msg_body = f"{r_text}\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n{s_text}"
             logger.info("Sending telegram message with Garmin statistics")
             self._send_telegram_text(msg_body=msg_body)
         else:
