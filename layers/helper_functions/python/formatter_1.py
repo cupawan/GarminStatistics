@@ -87,7 +87,6 @@ class Formatter:
 Running ({running_data['formatted_date']})
 =========================
 Streak: {metadata['streak']} Days
-
 {running_data['activity_name']}
 {running_data['formatted_start_time']}
 Distance: {running_data['distance']:.2f} kms
@@ -140,14 +139,12 @@ Sleep {sleep_data['formatted_date']}
 You slept for {sleep_data['total_time']}, from {sleep_data['from_']} to {sleep_data['to_']}.
 Score: {sleep_data['sleep_score']} ({sleep_data['quality']})
 Feedback: {sleep_data['Sleep Feedback']}
-
 Sleep Stages:
 -------------
-REM: {sleep_data['REM_Quality']}|{sleep_data['REM_Time']}|{sleep_data['REM_Score']}/{sleep_data['REM_Optimal']}
-Light: {sleep_data['Light_Quality']}|{sleep_data['Light_Time']}|{sleep_data['Light_Score']}/{sleep_data['Light_Optimal']}
-Deep: {sleep_data['Deep_Quality']}|{sleep_data['Deep_Time']}|{sleep_data['Deep_Score']}/{sleep_data['Deep_Optimal']}
-Awake: {sleep_data['Awake_Quality']}|{sleep_data['Awake_Time']}|{sleep_data['Awake_Score']}/{sleep_data['Awake_Optimal']}
-
+REM: {sleep_data['REM_Quality']},{sleep_data['REM_Time']},{sleep_data['REM_Score']} [{sleep_data['REM_Optimal']}]
+Light: {sleep_data['Light_Quality']},{sleep_data['Light_Time']},{sleep_data['Light_Score']} [{sleep_data['Light_Optimal']}]
+Deep: {sleep_data['Deep_Quality']},{sleep_data['Deep_Time']},{sleep_data['Deep_Score']} [{sleep_data['Deep_Optimal']}]
+Awake: {sleep_data['Awake_Quality']},{sleep_data['Awake_Time']},{sleep_data['Awake_Score']} [{sleep_data['Awake_Optimal']}]
 Additional Metrics:
 -------------------
 Avg Sleep Stress: {sleep_data['Average_Sleep_Stress']}
