@@ -140,7 +140,7 @@ class Formatter:
         return summary_message
 
     def garminMainEmailFormatter(
-        self, running_html,  metadata, sleep_html = "", body_stats_html = ""
+        self, running_html, sleep_html, body_stats_html, metadata
     ):
         html_content = f"""
             <html>
