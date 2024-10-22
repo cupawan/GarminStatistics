@@ -4,8 +4,8 @@ import ast
 import datetime
 import logging
 
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger("basic")
+logger = logging.getLogger(__name__)
+logger.setLevel("INFO")
 
 class Boto3Utils:
     def __init__(self):

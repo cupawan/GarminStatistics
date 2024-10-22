@@ -8,6 +8,7 @@ import logging
 from collections import defaultdict
 
 logger = logging.getLogger(__name__)
+logger.setLevel("INFO")
 
 class GarminAPI:
     def __init__(self, config_path = None):

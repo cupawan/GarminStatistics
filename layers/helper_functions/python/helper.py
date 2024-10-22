@@ -10,6 +10,7 @@ import datetime
 import logging
 
 logger = logging.getLogger(__name__)
+logger.setLevel("INFO")
 
 class Helper:
     def __init__(self):
@@ -27,6 +28,10 @@ class Helper:
         self.tg.send_document_message(document_file_path=self.telegram_docname, chat_id=self.tg.config["TELEGRAM_CHAT_IDS"]["PAWAN"], caption="Today's Garmin Statistics")        
         logger.info(f"Removing temporary file: {self.telegram_docname}")
         os.remove(self.telegram_docname)
+    
+    def _send_telegram_text(self, msg_body):       
+        logger.info("Sending text message via Telegram")
+        self.tg.send_plain_message(text = msg_body, chat_id=self.tg.config["TELEGRAM_CHAT_IDS"]["PAWAN"])
         
 
     def send_data(self):
@@ -67,5 +72,25 @@ class Helper:
             logger.info(f"Inserted records in MongoDB:\n Sleep Data: {insert_sleep_data_in_mongo}\n Body Statistics: {insert_bodystats_data_in_mongo}\n Running Data: {insert_running_data_in_mongo}")
         else:
             msg = f"No Data Received: Running - {bool(running_data)}, Sleep Statistics - {bool(sleep_data)}, Body Statistics - {bool(body_stats_data)}"
+            logger.warning(msg)
+            self.tg.send_plain_message(chat_id=self.tg.config["TELEGRAM_CHAT_IDS"]["PAWAN"], text=msg)
+            
+    def send_data_min(self):
+        logger.info("Initializing GarminAPI and MongoUtils instances")
+        garmin_instance = GarminAPI()
+        logger.info("Fetching data from GarminAPI")
+        sleep_data = garmin_instance.getSleepStats()
+        running_data, metadata, activity_id = garmin_instance.getRunningData()
+        streak, day_flag = garmin_instance.getRunningStreak()
+        metadata.update({"streak": streak})
+        r_text = Formatter().running_text(running_data=running_data, metadata=metadata)
+        s_text = Formatter().sleep_text(sleep_data=sleep_data)
+        if sleep_data and running_data:
+            logger.info("All data fetched successfully. Formatting text body.")
+            msg_body = f"{r_text}\n\n{s_text}"
+            logger.info("Sending telegram message with Garmin statistics")
+            self._send_telegram_text(msg_body=msg_body)
+        else:
+            msg = f"No Data Received: Running - {bool(running_data)}, Sleep Statistics - {bool(sleep_data)}"
             logger.warning(msg)
             self.tg.send_plain_message(chat_id=self.tg.config["TELEGRAM_CHAT_IDS"]["PAWAN"], text=msg)

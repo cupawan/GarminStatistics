@@ -6,7 +6,11 @@ from email import encoders
 import datetime
 import re
 import pytz
+import logging
 from boto3_toolkit import Boto3Utils
+
+logger = logging.getLogger(__name__)
+logger.setLevel("INFO")
 
 class SendEmail:
     def __init__(self,is_html = False):

@@ -14,16 +14,16 @@ mongo_instance = MongoUtils()
 
 def main():
     help = Helper()
-    status_mongo = mongo_instance.find_one(collection_name = 'garmin_status', query = {'date': help.sync_date,'isUpdated': True})
-    logger.info(f"Sync Status: {status_mongo}")
-    if not status_mongo:
-        logger.info(f"Starting Execution")
-        help.send_data()
-        logger.info("Process Completed")
-        return {'statusCode': 200, 'status': "OK"}
-    else:
-        logger.info("Already Executed")              
-        return {'statusCode': 200, 'status': "Already executed"}
+    # status_mongo = mongo_instance.find_one(collection_name = 'garmin_status', query = {'date': help.sync_date,'isUpdated': True})
+    # logger.info(f"Sync Status: {status_mongo}")
+    # if not status_mongo:
+    logger.info(f"Starting Execution")
+    help.send_data_min()
+    logger.info("Process Completed")
+    return {'statusCode': 200, 'status': "OK"}
+    # else:
+    #     logger.info("Already Executed")              
+    #     return {'statusCode': 200, 'status': "Already executed"}
 
 def lambda_handler(event, context):
     try:
