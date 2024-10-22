@@ -130,8 +130,8 @@
                     "Fn::Sub": "${ApplicationName}${SourceName}EventRule${Env}"
                 },
                 "Description": "ScheduledRule",
-                "ScheduleExpression": "cron(0/30 1-3 * * ? *)",
-                "State": "DISABLED",
+                "ScheduleExpression": "cron(30 3 * * ? *)",
+                "State": "ENABLED",
                 "Targets": [
                     {
                         "Arn": {
