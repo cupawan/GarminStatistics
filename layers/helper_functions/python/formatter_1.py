@@ -85,7 +85,7 @@ class Formatter:
     def running_text(self, running_data, metadata):
         return f"""
         Running ({running_data['formatted_date']})
-        =======================================
+        '='*len(Running ({running_data['formatted_date']}))
 
         Streak: {metadata['streak']} Days
 
@@ -135,10 +135,11 @@ class Formatter:
                  <tr><td>Restlessness Level</td> <td>{sleep_data['Restlessness Level']}</td></tr>
             </table>
             """
+    
     def sleep_text(self, sleep_data):
         return f"""
-        Sleep Summary for {sleep_data['formatted_date']}
-        =============================================
+        Sleep {sleep_data['formatted_date']}
+        '='*len(Running ({sleep_data['formatted_date']}))
 
         Overall Sleep Summary:
         ----------------------
