@@ -88,15 +88,13 @@ Running ({running_data['formatted_date']})
 =========================
 Streak: {metadata['streak']} Days
 
-Activity Details:
------------------
-Activity Name: {running_data['activity_name']}
-Start Time: {running_data['formatted_start_time']}
-Distance: {running_data['distance']:.2f} km
+{running_data['activity_name']}
+{running_data['formatted_start_time']}
+Distance: {running_data['distance']:.2f} kms
 Duration: {running_data['duration']}
-Average Pace: {running_data['avg_pace']}
+Avg Pace: {running_data['avg_pace']}
 Best Pace: {running_data['max_pace']}
-Calories Burned: {running_data['calories']} kcal
+Calories: {running_data['calories']} kcal
 Avg HR: {running_data['avg_hr']} bpm
 Max HR: {running_data['max_hr']} bpm
 Avg Cadence: {running_data['avg_cadence']} spm
@@ -139,19 +137,16 @@ Shoes: {metadata['gear']}
         return f"""
 Sleep {sleep_data['formatted_date']}
 =========================
-
-Overall Sleep Summary:
-----------------------
 You slept for {sleep_data['total_time']}, from {sleep_data['from_']} to {sleep_data['to_']}.
 Score: {sleep_data['sleep_score']} ({sleep_data['quality']})
 Feedback: {sleep_data['Sleep Feedback']}
 
 Sleep Stages:
 -------------
-REM Sleep: Quality - {sleep_data['REM_Quality']}, Time - {sleep_data['REM_Time']}, Score - {sleep_data['REM_Score']}, Optimal - {sleep_data['REM_Optimal']}
-Light Sleep: Quality - {sleep_data['Light_Quality']}, Time - {sleep_data['Light_Time']}, Score - {sleep_data['Light_Score']}, Optimal - {sleep_data['Light_Optimal']}
-Deep Sleep: Quality - {sleep_data['Deep_Quality']}, Time - {sleep_data['Deep_Time']}, Score - {sleep_data['Deep_Score']}, Optimal - {sleep_data['Deep_Optimal']}
-Awake: Quality - {sleep_data['Awake_Quality']}, Time - {sleep_data['Awake_Time']}, Score - {sleep_data['Awake_Score']}, Optimal - {sleep_data['Awake_Optimal']}
+REM: {sleep_data['REM_Quality']}|{sleep_data['REM_Time']}|{sleep_data['REM_Score']}/{sleep_data['REM_Optimal']}
+Light: {sleep_data['Light_Quality']}|{sleep_data['Light_Time']}|{sleep_data['Light_Score']}/{sleep_data['Light_Optimal']}
+Deep: {sleep_data['Deep_Quality']}|{sleep_data['Deep_Time']}|{sleep_data['Deep_Score']}/{sleep_data['Deep_Optimal']}
+Awake: {sleep_data['Awake_Quality']}|{sleep_data['Awake_Time']}|{sleep_data['Awake_Score']}/{sleep_data['Awake_Optimal']}
 
 Additional Metrics:
 -------------------
