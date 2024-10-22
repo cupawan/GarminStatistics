@@ -9,12 +9,12 @@ before_script:
   - apt-get install -y awscli zip
   - pip install aws-sam-cli
 
-build-sam:
+build:
   stage: build
   script:
     - sam build --template-file garmin-simple-stack.json
 
-deploy-sam:
+deploy:
   stage: deploy
   script:
     - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
