@@ -106,7 +106,7 @@
                             "Ref": "Env"
                         },
                         "TelegramBotToken": {
-                            "Ref": "TelegramBotToken,"
+                            "Ref": "TelegramBotToken"
                         }
                     }
                 },
