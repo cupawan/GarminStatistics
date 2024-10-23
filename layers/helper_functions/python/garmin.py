@@ -6,6 +6,7 @@ from boto3_toolkit import Boto3Utils
 from time_utils import CommonUtils
 import logging
 from collections import defaultdict
+from ErrorHandling import *
 
 logger = logging.getLogger(__name__)
 logger.setLevel("INFO")
@@ -30,79 +31,87 @@ class GarminAPI:
         return api
 
     def getSleepStats(self):
-        logger.info("Fetching Sleep Statistics from Garmin")
-        sleep_data = self.api.get_sleep_data(self.today_c_date)
-        sleep_dict = defaultdict(lambda:0)
-        calendar_date = sleep_data['dailySleepDTO']['calendarDate']
-        date_object = datetime.datetime.strptime(calendar_date, '%Y-%m-%d')
-        formatted_date = date_object.strftime('%a, %d %b %y')
-        sleep_score = sleep_data['dailySleepDTO']['sleepScores']['overall']['value']
-        total_duration = sleep_data['dailySleepDTO']['sleepScores']['totalDuration']['qualifierKey'].title()
-        total_sleep_seconds = sleep_data['dailySleepDTO']['sleepTimeSeconds']
-        avg_sleep_stress = sleep_data['dailySleepDTO']['avgSleepStress']
-        awake_count = sleep_data['dailySleepDTO']['sleepScores']['awakeCount']['qualifierKey'].title()
-        awake_seconds = sleep_data['dailySleepDTO']['awakeSleepSeconds']
-        awake_value = sleep_data['dailySleepDTO']['awakeCount']
-        awake_start = int(sleep_data['dailySleepDTO']['sleepScores']['awakeCount']['optimalStart'])
-        awake_end = int(sleep_data['dailySleepDTO']['sleepScores']['awakeCount']['optimalEnd'])
-        rem_percentage = sleep_data['dailySleepDTO']['sleepScores']['remPercentage']['qualifierKey'].title()
-        rem_value = sleep_data['dailySleepDTO']['sleepScores']['remPercentage']['value']
-        rem_seconds = sleep_data['dailySleepDTO']['remSleepSeconds']
-        rem_start = int(sleep_data['dailySleepDTO']['sleepScores']['remPercentage']['optimalStart'])
-        rem_end = int(sleep_data['dailySleepDTO']['sleepScores']['remPercentage']['optimalEnd'])
-        light_seconds = sleep_data['dailySleepDTO']['lightSleepSeconds']
-        light_percentage = sleep_data['dailySleepDTO']['sleepScores']['lightPercentage']['qualifierKey'].title()
-        light_value = sleep_data['dailySleepDTO']['sleepScores']['lightPercentage']['value']
-        light_start = int(sleep_data['dailySleepDTO']['sleepScores']['lightPercentage']['optimalStart'])
-        light_end = int(sleep_data['dailySleepDTO']['sleepScores']['lightPercentage']['optimalEnd'])
-        restlessness = sleep_data['dailySleepDTO']['sleepScores']['restlessness']['qualifierKey'].title()
-        restless_moments_count = sleep_data['restlessMomentsCount']
-        deep_seconds = sleep_data['dailySleepDTO']['deepSleepSeconds']
-        deep_percentage = sleep_data['dailySleepDTO']['sleepScores']['deepPercentage']['qualifierKey'].title()
-        deep_value = sleep_data['dailySleepDTO']['sleepScores']['deepPercentage']['value']
-        deep_start = int(sleep_data['dailySleepDTO']['sleepScores']['deepPercentage']['optimalStart'])
-        deep_end = int(sleep_data['dailySleepDTO']['sleepScores']['deepPercentage']['optimalEnd'])
-        body_battery_change  = sleep_data['bodyBatteryChange']
-        resting_heartrate = sleep_data['restingHeartRate']
-        feedback = sleep_data['dailySleepDTO']['sleepScoreFeedback']
-        ist = pytz.timezone('Asia/Kolkata')
-        sleep_start_ts = sleep_data['dailySleepDTO']['sleepStartTimestampGMT']/1000
-        sleep_end_ts = sleep_data['dailySleepDTO']['sleepEndTimestampGMT']/1000
-        sleep_start = datetime.datetime.fromtimestamp(sleep_start_ts).astimezone(ist).strftime("%H:%M")
-        sleep_end = datetime.datetime.fromtimestamp(sleep_end_ts).astimezone(ist).strftime("%H:%M")
-        sleep_dict = {
-            'formatted_date': formatted_date,'total_time' : self.utils.seconds_to_hm(total_sleep_seconds),'from_' : sleep_start,'to_' : sleep_end,'sleep_score' : f"{sleep_score}/100",'quality' : total_duration,'REM_Quality' : rem_percentage,'REM_Time' : self.utils.seconds_to_hm(rem_seconds),'REM_Score' : rem_value,'REM_Optimal' : f"{rem_start}-{rem_end}",'Light_Quality' : light_percentage,'Light_Time' : self.utils.seconds_to_hm(light_seconds),'Light_Score' : light_value,'Light_Optimal' : f"{light_start}-{light_end}",'Deep_Quality' : deep_percentage,'Deep_Time' : self.utils.seconds_to_hm(deep_seconds),'Deep_Score' : deep_value,'Deep_Optimal' : f"{deep_start}-{deep_end}",'Awake_Quality' : awake_count,"Awake_Time" : self.utils.seconds_to_hm(awake_seconds),"Awake_Score" : awake_value,"Awake_Optimal" : f"{awake_start}-{awake_end}","Average_Sleep_Stress" : int(avg_sleep_stress),"Body Battery Change" : body_battery_change,"Resting Heart Rate" : resting_heartrate,"Restlessness Level" : restlessness,"Restless moments" : restless_moments_count,"Sleep Feedback" : feedback.title().replace('_',' ')
-            }
-        logger.info("Generated Sleep Statistics Data Successfully")
-        return sleep_dict
+        try:
+            logger.info("Fetching Sleep Statistics from Garmin")
+            sleep_data = self.api.get_sleep_data(self.today_c_date)
+            sleep_dict = defaultdict(lambda:0)
+            calendar_date = sleep_data['dailySleepDTO']['calendarDate']
+            date_object = datetime.datetime.strptime(calendar_date, '%Y-%m-%d')
+            formatted_date = date_object.strftime('%a, %d %b %y')
+            sleep_score = sleep_data['dailySleepDTO']['sleepScores']['overall']['value']
+            total_duration = sleep_data['dailySleepDTO']['sleepScores']['totalDuration']['qualifierKey'].title()
+            total_sleep_seconds = sleep_data['dailySleepDTO']['sleepTimeSeconds']
+            avg_sleep_stress = sleep_data['dailySleepDTO']['avgSleepStress']
+            awake_count = sleep_data['dailySleepDTO']['sleepScores']['awakeCount']['qualifierKey'].title()
+            awake_seconds = sleep_data['dailySleepDTO']['awakeSleepSeconds']
+            awake_value = sleep_data['dailySleepDTO']['awakeCount']
+            awake_start = int(sleep_data['dailySleepDTO']['sleepScores']['awakeCount']['optimalStart'])
+            awake_end = int(sleep_data['dailySleepDTO']['sleepScores']['awakeCount']['optimalEnd'])
+            rem_percentage = sleep_data['dailySleepDTO']['sleepScores']['remPercentage']['qualifierKey'].title()
+            rem_value = sleep_data['dailySleepDTO']['sleepScores']['remPercentage']['value']
+            rem_seconds = sleep_data['dailySleepDTO']['remSleepSeconds']
+            rem_start = int(sleep_data['dailySleepDTO']['sleepScores']['remPercentage']['optimalStart'])
+            rem_end = int(sleep_data['dailySleepDTO']['sleepScores']['remPercentage']['optimalEnd'])
+            light_seconds = sleep_data['dailySleepDTO']['lightSleepSeconds']
+            light_percentage = sleep_data['dailySleepDTO']['sleepScores']['lightPercentage']['qualifierKey'].title()
+            light_value = sleep_data['dailySleepDTO']['sleepScores']['lightPercentage']['value']
+            light_start = int(sleep_data['dailySleepDTO']['sleepScores']['lightPercentage']['optimalStart'])
+            light_end = int(sleep_data['dailySleepDTO']['sleepScores']['lightPercentage']['optimalEnd'])
+            restlessness = sleep_data['dailySleepDTO']['sleepScores']['restlessness']['qualifierKey'].title()
+            restless_moments_count = sleep_data['restlessMomentsCount']
+            deep_seconds = sleep_data['dailySleepDTO']['deepSleepSeconds']
+            deep_percentage = sleep_data['dailySleepDTO']['sleepScores']['deepPercentage']['qualifierKey'].title()
+            deep_value = sleep_data['dailySleepDTO']['sleepScores']['deepPercentage']['value']
+            deep_start = int(sleep_data['dailySleepDTO']['sleepScores']['deepPercentage']['optimalStart'])
+            deep_end = int(sleep_data['dailySleepDTO']['sleepScores']['deepPercentage']['optimalEnd'])
+            body_battery_change  = sleep_data['bodyBatteryChange']
+            resting_heartrate = sleep_data['restingHeartRate']
+            feedback = sleep_data['dailySleepDTO']['sleepScoreFeedback']
+            ist = pytz.timezone('Asia/Kolkata')
+            sleep_start_ts = sleep_data['dailySleepDTO']['sleepStartTimestampGMT']/1000
+            sleep_end_ts = sleep_data['dailySleepDTO']['sleepEndTimestampGMT']/1000
+            sleep_start = datetime.datetime.fromtimestamp(sleep_start_ts).astimezone(ist).strftime("%H:%M")
+            sleep_end = datetime.datetime.fromtimestamp(sleep_end_ts).astimezone(ist).strftime("%H:%M")
+            sleep_dict = {
+                'formatted_date': formatted_date,'total_time' : self.utils.seconds_to_hm(total_sleep_seconds),'from_' : sleep_start,'to_' : sleep_end,'sleep_score' : f"{sleep_score}/100",'quality' : total_duration,'REM_Quality' : rem_percentage,'REM_Time' : self.utils.seconds_to_hm(rem_seconds),'REM_Score' : rem_value,'REM_Optimal' : f"{rem_start}-{rem_end}",'Light_Quality' : light_percentage,'Light_Time' : self.utils.seconds_to_hm(light_seconds),'Light_Score' : light_value,'Light_Optimal' : f"{light_start}-{light_end}",'Deep_Quality' : deep_percentage,'Deep_Time' : self.utils.seconds_to_hm(deep_seconds),'Deep_Score' : deep_value,'Deep_Optimal' : f"{deep_start}-{deep_end}",'Awake_Quality' : awake_count,"Awake_Time" : self.utils.seconds_to_hm(awake_seconds),"Awake_Score" : awake_value,"Awake_Optimal" : f"{awake_start}-{awake_end}","Average_Sleep_Stress" : int(avg_sleep_stress),"Body Battery Change" : body_battery_change,"Resting Heart Rate" : resting_heartrate,"Restlessness Level" : restlessness,"Restless moments" : restless_moments_count,"Sleep Feedback" : feedback.title().replace('_',' ')
+                }
+            logger.info("Generated Sleep Statistics Data Successfully")
+            return sleep_dict
+        except Exception:
+            logger.error("[Sleep]: No Sleep Data Found")
+            raise NoSleepError
     
     def getYesterdayBodyStats(self):
-        logger.info(f"Fetching Body Statistics for {self.yesterday_c_date}")
-        garmin_body_stats = self.api.get_stats_and_body(self.yesterday_c_date)
-        date_object = datetime.datetime.strptime(garmin_body_stats['calendarDate'], '%Y-%m-%d')
-        formatted_date = date_object.strftime('%a, %d %b %y')
-        d = {
-            "formatted_date" : formatted_date,
-            "Total kcal": int(garmin_body_stats['totalKilocalories']),
-            "Active kcal": int(garmin_body_stats['activeKilocalories']),
-            "Total Steps / Goal": f"{garmin_body_stats['totalSteps']} / {garmin_body_stats['dailyStepGoal']}",
-            "Distance": garmin_body_stats['totalDistanceMeters'],
-            "Highly Active Duration": self.utils.seconds_to_hm(garmin_body_stats['highlyActiveSeconds']),
-            "Active Duration": self.utils.seconds_to_hm(garmin_body_stats['activeSeconds']),
-            "Sedentary Duration": self.utils.seconds_to_hm(garmin_body_stats['sedentarySeconds']),
-            "Moderate Intensity Minutes": garmin_body_stats['moderateIntensityMinutes'],
-            "Vigorous Intensity Minutes": garmin_body_stats['vigorousIntensityMinutes'],
-            "Floors Up": int(garmin_body_stats['floorsAscended']),
-            "Floors Down": int(garmin_body_stats['floorsDescended']),
-            "Heart Rate - Min/Resting/Max": f"{garmin_body_stats['minHeartRate']} / {garmin_body_stats['restingHeartRate']} / {garmin_body_stats['maxHeartRate']}",
-            "Last Seven Days Avg RHR": garmin_body_stats['lastSevenDaysAvgRestingHeartRate'],
-            "Avg Stress": garmin_body_stats['averageStressLevel'],
-            "Max Stress": garmin_body_stats['maxStressLevel'],
-            "Stress Duration": self.utils.seconds_to_hm(garmin_body_stats['stressDuration']),
-            "Blood Oxygen (SpO2)": garmin_body_stats['averageSpo2']
-            }        
-        logger.info("Generated Body Statistics Data Successfully")
-        return d
+        try:
+            logger.info(f"Fetching Body Statistics for {self.yesterday_c_date}")
+            garmin_body_stats = self.api.get_stats_and_body(self.yesterday_c_date)
+            date_object = datetime.datetime.strptime(garmin_body_stats['calendarDate'], '%Y-%m-%d')
+            formatted_date = date_object.strftime('%a, %d %b %y')
+            d = {
+                "formatted_date" : formatted_date,
+                "Total kcal": int(garmin_body_stats['totalKilocalories']),
+                "Active kcal": int(garmin_body_stats['activeKilocalories']),
+                "Total Steps / Goal": f"{garmin_body_stats['totalSteps']} / {garmin_body_stats['dailyStepGoal']}",
+                "Distance": garmin_body_stats['totalDistanceMeters'],
+                "Highly Active Duration": self.utils.seconds_to_hm(garmin_body_stats['highlyActiveSeconds']),
+                "Active Duration": self.utils.seconds_to_hm(garmin_body_stats['activeSeconds']),
+                "Sedentary Duration": self.utils.seconds_to_hm(garmin_body_stats['sedentarySeconds']),
+                "Moderate Intensity Minutes": garmin_body_stats['moderateIntensityMinutes'],
+                "Vigorous Intensity Minutes": garmin_body_stats['vigorousIntensityMinutes'],
+                "Floors Up": int(garmin_body_stats['floorsAscended']),
+                "Floors Down": int(garmin_body_stats['floorsDescended']),
+                "Heart Rate - Min/Resting/Max": f"{garmin_body_stats['minHeartRate']} / {garmin_body_stats['restingHeartRate']} / {garmin_body_stats['maxHeartRate']}",
+                "Last Seven Days Avg RHR": garmin_body_stats['lastSevenDaysAvgRestingHeartRate'],
+                "Avg Stress": garmin_body_stats['averageStressLevel'],
+                "Max Stress": garmin_body_stats['maxStressLevel'],
+                "Stress Duration": self.utils.seconds_to_hm(garmin_body_stats['stressDuration']),
+                "Blood Oxygen (SpO2)": garmin_body_stats['averageSpo2']
+                }        
+            logger.info("Generated Body Statistics Data Successfully")
+            return d
+        except Exception:
+            logger.error("[Body]: No Body Statistics Found")
+            raise NoBodyStatsError
     
     def getTodayBodyStats(self):
         stats = self.api.get_stats_and_body(self.today_c_date)
@@ -186,7 +195,8 @@ class GarminAPI:
                 d['is_PR'] = data['metadataDTO']['personalRecord']
                 return d, metadata, activity_id
             else:
-                return d, metadata, "NA"              
+                logger.error("[Running]: No Running Data Found")
+                raise NoRunningError
 
     def getRunningStreak(self, streakStart= "2024-8-1"):
         logger.info("Fetching Run Streak")

@@ -4,6 +4,7 @@ import traceback
 from helper import Helper
 from mongo_utils import MongoUtils
 from telegram_message import TelegramMessage
+from ErrorHandling import *
 
 logger = logging.getLogger(__name__)
 logger.setLevel("INFO")
@@ -29,6 +30,10 @@ def lambda_handler(event, context):
     try:
         response = main()
         return {'statusCode': 200, 'body': json.dumps(response)}
+    except (NoRunningError,NoSleepError,NoBodyStatsError) as e:
+        logger.error(e.msg)
+        telegram_instance.send_plain_message(chat_id=telegram_instance.config["TELEGRAM_CHAT_IDS"]["PAWAN"], text=e.msg)
+        return {'statusCode': 404, 'body': e.msg} 
     except Exception as e:
         error_message = f"An error occurred: {str(e)}\n\nTraceback:\n{traceback.format_exc()}"
         logger.error(error_message)
