@@ -18,6 +18,14 @@
         "TelegramBotToken": {
             "Type": "String",
             "NoEcho": "true"
+        },
+        "TelegramChatIdPawan": {
+            "Type": "String",
+            "NoEcho": "true"
+        },
+        "MyGarminPassword": {
+            "Type": "String",
+            "NoEcho": "true"
         }
     },
     "Resources": {
@@ -107,6 +115,12 @@
                         },
                         "TelegramBotToken": {
                             "Ref": "TelegramBotToken"
+                        },
+                        "TelegramChatIdPawan": {
+                            "Ref": "TelegramChatIdPawan"
+                        },
+                        "MyGarminPassword": {
+                            "Ref": "MyGarminPassword"
                         }
                     }
                 },
