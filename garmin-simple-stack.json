@@ -14,6 +14,10 @@
         "Env": {
             "Description": "Environment",
             "Type": "String"
+        },
+        "TelegramBotToken": {
+            "Type": "String",
+            "NoEcho": "true"
         }
     },
     "Resources": {
@@ -100,6 +104,9 @@
                     "Variables": {
                         "config": {
                             "Ref": "Env"
+                        },
+                        "TelegramBotToken": {
+                            "Ref": "TelegramBotToken,"
                         }
                     }
                 },
