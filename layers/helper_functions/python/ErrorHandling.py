@@ -1,6 +1,8 @@
 class GarminError(Exception):
     def __init__(self,msg, code):
         print(f"Error {code}: {msg}")
+        self.msg = msg
+        self.code = code
         
         
 class NoRunningError(GarminError):
